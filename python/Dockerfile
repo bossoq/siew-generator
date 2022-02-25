@@ -12,4 +12,4 @@ RUN pipenv install
 
 COPY /rootfs /app
 
-CMD ["python", "-u", "main.py"]
+CMD ["pipenv", "run", "python", "-u", "main.py"]
