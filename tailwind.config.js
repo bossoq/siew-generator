@@ -23,4 +23,5 @@ module.exports = {
       // safelist: [],
     },
   },
+  darkMode: "class",
 };

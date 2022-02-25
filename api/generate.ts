@@ -14,7 +14,7 @@ const generate = async (req: Request, res: Response) => {
           },
         }
       );
-      res.send(`${resp.data}`);
+      res.send(`${JSON.stringify(resp.data)}`);
     } else {
       res.send("");
     }
