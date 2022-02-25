@@ -1,2 +1,5 @@
 Pipfile.lock
 .env
+.vercel
+node_modules
+public

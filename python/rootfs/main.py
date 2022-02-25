@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from utils.text_generator import TextGenerator
 
 api_token = os.environ.get('TOKEN', None)
@@ -11,10 +11,12 @@ app = Flask(__name__)
 @app.route('/generate', methods=['GET', 'POST'])
 def generate():
     if request.method == 'POST':
-        text = request.form['text']
+        text = request.get_json()['text']
         token = request.headers.get('token')
         if token == api_token:
-            return text_generator.generate_text(text)
+            resp_text = text_generator.generate_text(text)
+            resp_dict = {'reqText': text, 'respText': resp_text}
+            return jsonify(resp_dict)
         else:
             return 'Invalid token'
     elif request.method == 'GET':
