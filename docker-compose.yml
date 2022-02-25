@@ -7,8 +7,8 @@ services:
     networks:
       br0:
         ipv4_address: '10.0.3.90'
-      environment:
-        - TOKEN
+    environment:
+      - TOKEN
 
 networks:
   br0:
