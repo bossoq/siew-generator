@@ -11,6 +11,7 @@
     "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.11",
     "autoprefixer": "^10.4.2",
+    "axios": "^0.26.0",
     "postcss": "^8.4.7",
     "postcss-cli": "^9.1.0",
     "postcss-preset-env": "^7.4.1",
@@ -30,7 +31,11 @@
     "extends": "react-app"
   },
   "browserslist": {
-    "production": [">0.2%", "not dead", "not op_mini all"],
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
