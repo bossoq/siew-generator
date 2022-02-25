@@ -6,7 +6,7 @@ const generate = async (req: Request, res: Response) => {
     const reqText: string = req.body.text;
     if (reqText !== "") {
       const resp = await axios.post(
-        "http://10.0.3.90:5000/generate",
+        "https://siewapi.picturo.us/generate",
         { text: reqText },
         {
           headers: {
