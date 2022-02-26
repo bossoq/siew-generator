@@ -157,6 +157,12 @@ const App = () => {
           {darkTheme ? '🌞' : '🌙'}
         </p>
       </div>
+      <div className="absolute top-0 right-0 p-2 text-grey-500 dark:text-white text-lg">
+        <a href="https://github.com/bossoq/siew-generator">
+          Made by{' '}
+          <span className="text-emerald-900 dark:text-emerald-200">bossoq</span>
+        </a>
+      </div>
     </>
   )
 }
