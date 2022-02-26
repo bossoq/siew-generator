@@ -24,6 +24,7 @@ const App = () => {
   const [respText, setRespText] = useState<string>('')
   const [copied, setCopied] = useState<boolean>(false)
   const [random, setRandom] = useState<boolean>(false)
+  const [loaded, setLoaded] = useState<boolean>(false)
 
   const rawSetTheme = (dark: boolean) => {
     const rawTheme = dark ? 'dark' : 'light'
@@ -45,6 +46,7 @@ const App = () => {
       setReqText(text)
       axios.post('/api/generate', { text: text }).then((res) => {
         setRespText(res.data.respText)
+        setLoaded(true)
       })
     }
   }
@@ -91,6 +93,7 @@ const App = () => {
   }, [darkTheme])
 
   useEffect(() => {
+    setLoaded(false)
     const timeout = setTimeout(() => {
       generateText(text, reqText)
     }, 2000)
@@ -116,20 +119,23 @@ const App = () => {
                 </span>
                 <input
                   type={'text'}
-                  className="md:text-xl text-lg col-span-3 border border-grey-500 bg-amber-200 rounded-lg p-3"
+                  className="md:text-xl text-lg col-span-3 border border-gray-500 bg-amber-200 rounded-lg p-3"
                   placeholder={'ใส่คำเสี่ยวๆ ที่นี่'}
                   value={text}
                   onChange={handleChange}
                 ></input>
               </div>
-              <div className="grid grid-cols-4 gap-4 items-center">
+              <div className="grid grid-cols-4 gap-4 items-center relative">
                 <span className="text-black dark:text-white md:text-xl text-lg">
                   ข้อความเสี่ยวๆ:{' '}
                 </span>
+                {!loaded && (
+                  <span className="absolute right-4 w-8 h-8 border-b-2 border-r-2 border-gray-900 rounded-full animate-spin inline-block"></span>
+                )}
                 <input
                   type={'text'}
                   disabled
-                  className="md:text-xl text-lg col-span-3 border border-grey-500 bg-orange-200 rounded-lg p-3"
+                  className="md:text-xl text-lg col-span-3 border border-gray-500 bg-orange-200 rounded-lg p-3"
                   placeholder={'กำลังคิดคำเสี่ยวๆให้อยู่...'}
                   value={respText}
                 ></input>
@@ -152,12 +158,12 @@ const App = () => {
           </div>
         </div>
       </div>
-      <div className="absolute top-0 left-0 p-2 text-grey-500 text-2xl">
+      <div className="absolute top-0 left-0 p-2 text-gray-500 text-2xl">
         <p onClick={() => setDarkTheme(!darkTheme)} className="cursor-pointer">
           {darkTheme ? '🌞' : '🌙'}
         </p>
       </div>
-      <div className="absolute top-0 right-0 p-2 text-grey-500 dark:text-white text-lg">
+      <div className="absolute top-0 right-0 p-2 text-gray-500 dark:text-white text-lg">
         <a href="https://github.com/bossoq/siew-generator">
           Made by{' '}
           <span className="text-emerald-900 dark:text-emerald-200">bossoq</span>
