@@ -32,7 +32,9 @@ const App = () => {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setText(e.target.value)
+    if (e.target.value.match('[ก-์]+') !== null || e.target.value === '') {
+      setText(e.target.value)
+    }
   }
 
   const generateText = (text: string, reqtext: string) => {
