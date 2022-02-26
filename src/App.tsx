@@ -39,7 +39,6 @@ const App = () => {
     if (text !== reqtext) {
       setReqText(text)
       axios.post('/api/generate', { text: text }).then((res) => {
-        console.log({ ...res.data })
         setRespText(res.data.respText)
       })
     }
@@ -61,34 +60,34 @@ const App = () => {
   return (
     <>
       <div className="grid h-screen place-items-center bg-white dark:bg-black">
-        <div>
+        <div className="m-4">
           <div className="flex flex-col justify-center gap-6">
             <div className="md:text-8xl text-6xl m-4 text-center font-bold">
               <p className="inline-block text-black dark:text-white">
-                Siew Generator 💘
+                สร้าง คำ เสี่ยว 💘
               </p>
             </div>
             <div className="flex flex-col gap-4">
-              <div className="flex flex-row gap-4 items-center">
+              <div className="grid grid-cols-4 gap-4 items-center">
                 <span className="text-black dark:text-white md:text-xl text-lg">
                   ใส่ข้อความที่นี่:{' '}
                 </span>
                 <input
                   type={'text'}
-                  className="md:text-xl text-lg flex-grow border border-grey-500 bg-amber-200 rounded-lg p-3"
+                  className="md:text-xl text-lg col-span-3 border border-grey-500 bg-amber-200 rounded-lg p-3"
                   placeholder={'ใส่คำเสี่ยวๆ ที่นี่'}
                   value={text}
                   onChange={handleChange}
                 ></input>
               </div>
-              <div className="flex flex-row gap-4 items-center">
+              <div className="grid grid-cols-4 gap-4 items-center">
                 <span className="text-black dark:text-white md:text-xl text-lg">
                   ข้อความเสี่ยวๆ:{' '}
                 </span>
                 <input
                   type={'text'}
                   disabled
-                  className="md:text-xl text-lg flex-grow border border-grey-500 bg-orange-200 rounded-lg p-3"
+                  className="md:text-xl text-lg col-span-3 border border-grey-500 bg-orange-200 rounded-lg p-3"
                   placeholder={'กำลังคิดคำเสี่ยวๆให้อยู่...'}
                   value={respText}
                 ></input>
