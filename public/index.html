@@ -64,6 +64,7 @@
         type="image/png"
         sizes="16x16"
         href="/favicon/favicon-16x16.png" />
+  <script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
 </head>
 
 <body>
@@ -80,6 +81,17 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+  <script>
+    kofiWidgetOverlay.draw(
+      'bossoq',
+      {
+        type: 'floating-chat',
+        "floating-chat.donateButton.text": 'Buy me Coffee',
+        "floating-chat.donateButton.background-color": "#ff3e00",
+        "floating-chat.donateButton.text-color": "#fff",
+      }
+    )
+  </script>
 </body>
 
 </html>
