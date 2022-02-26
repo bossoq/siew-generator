@@ -1,97 +1,152 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import WordLists from './wordLists'
 
 const App = () => {
-  const getInitialTheme = () => {
-    if (typeof window !== "undefined" && window.localStorage) {
-      const storedPrefs = window.localStorage.getItem("color-theme");
-      if (typeof storedPrefs === "string") {
-        return storedPrefs === "dark" ? true : false;
+  const getInitialTheme = (): boolean => {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const storedPrefs = window.localStorage.getItem('color-theme')
+      if (typeof storedPrefs === 'string') {
+        return storedPrefs === 'dark' ? true : false
       }
-      const userMedia = window.matchMedia("(prefers-color-scheme: dark)");
+      const userMedia = window.matchMedia('(prefers-color-scheme: dark)')
       if (userMedia.matches) {
-        return true;
+        return true
       }
     }
-    return false;
-  };
+    return false
+  }
 
-  const [darkTheme, setDarkTheme] = useState<boolean>(getInitialTheme());
-  const [text, setText] = useState<string>("ถ้าเธอยังว่าง");
-  const [reqText, setReqText] = useState<string>("");
-  const [respText, setRespText] = useState<string>("");
+  const [darkTheme, setDarkTheme] = useState<boolean>(getInitialTheme())
+  const [text, setText] = useState<string>('ถ้าเธอยังว่าง')
+  const [reqText, setReqText] = useState<string>('')
+  const [respText, setRespText] = useState<string>('')
+  const [copied, setCopied] = useState<boolean>(false)
+  const [random, setRandom] = useState<boolean>(false)
 
   const rawSetTheme = (dark: boolean) => {
-    const rawTheme = dark ? "dark" : "light";
-    const root = window.document.documentElement;
-    setDarkTheme(dark);
-    root.classList.remove(dark ? "light" : "dark");
-    root.classList.add(rawTheme);
-    localStorage.setItem("color-theme", rawTheme);
-  };
+    const rawTheme = dark ? 'dark' : 'light'
+    const root = window.document.documentElement
+    setDarkTheme(dark)
+    root.classList.remove(dark ? 'light' : 'dark')
+    root.classList.add(rawTheme)
+    localStorage.setItem('color-theme', rawTheme)
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setText(e.target.value);
-  };
+    if (e.target.value.match('[ก-์]+') !== null || e.target.value === '') {
+      setText(e.target.value)
+    }
+  }
 
   const generateText = (text: string, reqtext: string) => {
     if (text !== reqtext) {
-      setReqText(text);
-      axios.post("/api/generate", { text: text }).then((res) => {
-        console.log({ ...res.data });
-        setRespText(res.data.respText);
-      });
+      setReqText(text)
+      axios.post('/api/generate', { text: text }).then((res) => {
+        setRespText(res.data.respText)
+      })
     }
-  };
+  }
+
+  const copyText = () => {
+    navigator.clipboard.writeText(respText)
+    setCopied(true)
+    setTimeout(() => {
+      setCopied(false)
+    }, 2000)
+  }
+
+  const getShuffle = (words: string[]): string[] => {
+    const array = words.slice(0)
+    let curIdx = array.length
+    let temporaryValue, randomIndex
+    while (0 !== curIdx) {
+      randomIndex = Math.floor(Math.random() * curIdx)
+      curIdx -= 1
+      temporaryValue = array[curIdx]
+      array[curIdx] = array[randomIndex]
+      array[randomIndex] = temporaryValue
+    }
+    const retIdx = Math.min(array.length, 10)
+    return array.slice(0, retIdx)
+  }
+
+  const randomText = () => {
+    const wordLists = getShuffle(WordLists)
+    setRandom(true)
+    let i = 0
+    const interval = setInterval(() => {
+      setText(wordLists[i])
+      i++
+      if (i === wordLists.length) {
+        clearInterval(interval)
+        setRandom(false)
+      }
+    }, 100)
+  }
 
   useEffect(() => {
-    rawSetTheme(darkTheme);
-  }, [darkTheme]);
+    rawSetTheme(darkTheme)
+  }, [darkTheme])
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      generateText(text, reqText);
-    }, 2000);
+      generateText(text, reqText)
+    }, 2000)
     return () => {
-      clearTimeout(timeout);
-    };
-  }, [text]);
+      clearTimeout(timeout)
+    }
+  }, [text])
 
   return (
     <>
       <div className="grid h-screen place-items-center bg-white dark:bg-black">
-        <div>
+        <div className="m-4">
           <div className="flex flex-col justify-center gap-6">
             <div className="md:text-8xl text-6xl m-4 text-center font-bold">
-              <p className="inline-block text-black dark:text-white">
-                Siew Generator 💘
+              <p className="animate-pulse inline-block text-black dark:text-white">
+                สร้าง คำ เสี่ยว 💘
               </p>
             </div>
             <div className="flex flex-col gap-4">
-              <div className="flex flex-row gap-4 items-center">
+              <div className="grid grid-cols-4 gap-4 items-center">
                 <span className="text-black dark:text-white md:text-xl text-lg">
-                  ใส่ข้อความที่นี่:{" "}
+                  ใส่ข้อความที่นี่:{' '}
                 </span>
                 <input
-                  type={"text"}
-                  className="md:text-xl text-lg flex-grow border border-grey-500 bg-amber-200 rounded-lg p-3"
-                  placeholder={"ใส่คำเสี่ยวๆ ที่นี่"}
+                  type={'text'}
+                  className="md:text-xl text-lg col-span-3 border border-grey-500 bg-amber-200 rounded-lg p-3"
+                  placeholder={'ใส่คำเสี่ยวๆ ที่นี่'}
                   value={text}
                   onChange={handleChange}
                 ></input>
               </div>
-              <div className="flex flex-row gap-4 items-center">
+              <div className="grid grid-cols-4 gap-4 items-center">
                 <span className="text-black dark:text-white md:text-xl text-lg">
-                  ข้อความเสี่ยวๆ:{" "}
+                  ข้อความเสี่ยวๆ:{' '}
                 </span>
                 <input
-                  type={"text"}
+                  type={'text'}
                   disabled
-                  className="md:text-xl text-lg flex-grow border border-grey-500 bg-orange-200 rounded-lg p-3"
-                  placeholder={"กำลังคิดคำเสี่ยวๆให้อยู่..."}
+                  className="md:text-xl text-lg col-span-3 border border-grey-500 bg-orange-200 rounded-lg p-3"
+                  placeholder={'กำลังคิดคำเสี่ยวๆให้อยู่...'}
                   value={respText}
                 ></input>
+              </div>
+              <div className="grid grid-cols-4 gap-4 items-center py-4">
+                <button
+                  className="col-start-2 rounded border mx-2 p-3 border-green-300 text-lg font-bold cursor-pointer bg-green-200 hover:bg-green-300 active:bg-green-400"
+                  onClick={copyText}
+                >
+                  {copied ? 'คัดลอกแล้ว' : 'คัดลอก'}
+                </button>
+                <button
+                  className="rounded border mx-2 p-3 border-red-300 text-lg font-bold cursor-pointer bg-red-200 hover:bg-red-300 active:bg-red-400"
+                  onClick={randomText}
+                >
+                  {random ? 'สุ่มคำแล้ว' : 'สุ่มคำใหม่'}
+                </button>
               </div>
             </div>
           </div>
@@ -99,11 +154,17 @@ const App = () => {
       </div>
       <div className="absolute top-0 left-0 p-2 text-grey-500 text-2xl">
         <p onClick={() => setDarkTheme(!darkTheme)} className="cursor-pointer">
-          {darkTheme ? "🌞" : "🌙"}
+          {darkTheme ? '🌞' : '🌙'}
         </p>
       </div>
+      <div className="absolute top-0 right-0 p-2 text-grey-500 dark:text-white text-lg">
+        <a href="https://github.com/bossoq/siew-generator">
+          Made by{' '}
+          <span className="text-emerald-900 dark:text-emerald-200">bossoq</span>
+        </a>
+      </div>
     </>
-  );
-};
+  )
+}
 
-export default App;
+export default App
