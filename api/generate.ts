@@ -1,26 +1,26 @@
-import axios from "axios";
-import type { Request, Response } from "express";
+import axios from 'axios'
+import type { Request, Response } from 'express'
 
 const generate = async (req: Request, res: Response) => {
-  if (req.method === "POST") {
-    const reqText: string = req.body.text;
-    if (reqText !== "") {
+  if (req.method === 'POST') {
+    const reqText: string = req.body.text
+    if (reqText !== '') {
       const resp = await axios.post(
-        "https://siewapi.picturo.us/generate",
+        'https://siewapi.picturo.us/generate',
         { text: reqText },
         {
           headers: {
             token: process.env.TOKEN,
           },
         }
-      );
-      res.send(`${JSON.stringify(resp.data)}`);
+      )
+      res.send(`${JSON.stringify(resp.data)}`)
     } else {
-      res.send("");
+      res.send('')
     }
   } else {
-    res.send("Your request is not valid");
+    res.send('Your request is not valid')
   }
-};
+}
 
-export default generate;
+export default generate
