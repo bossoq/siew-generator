@@ -140,15 +140,15 @@ const App = () => {
                   value={respText}
                 ></input>
               </div>
-              <div className="grid grid-cols-4 gap-4 items-center py-4">
+              <div className="grid grid-cols-6 gap-4 items-center py-4">
                 <button
-                  className="col-start-2 rounded border mx-2 p-3 border-green-300 md:text-lg text-base font-bold cursor-pointer bg-green-200 hover:bg-green-300 active:bg-green-400"
+                  className="col-start-2 col-span-2 rounded border mx-2 p-3 border-green-300 md:text-lg text-base font-bold cursor-pointer bg-green-200 hover:bg-green-300 active:bg-green-400"
                   onClick={copyText}
                 >
                   {copied ? 'คัดลอกแล้ว' : 'คัดลอก'}
                 </button>
                 <button
-                  className="rounded border mx-2 p-3 border-red-300 md:text-lg text-base font-bold cursor-pointer bg-red-200 hover:bg-red-300 active:bg-red-400"
+                  className="col-span-2 rounded border mx-2 p-3 border-red-300 md:text-lg text-base font-bold cursor-pointer bg-red-200 hover:bg-red-300 active:bg-red-400"
                   onClick={randomText}
                 >
                   {random ? 'สุ่มคำแล้ว' : 'สุ่มคำใหม่'}
