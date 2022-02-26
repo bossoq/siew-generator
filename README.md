@@ -135,6 +135,20 @@ To get a local copy up and running follow these simple steps.
    vercel deploy
    ```
 
+5. To train model
+
+   ```sh
+   git checkout python-model-trainer
+   pipenv install
+   # train new model
+   cd utils
+   pipenv run python training.py
+   # test new model
+   # test by post to backend
+   cd ../
+   pipenv run python app.py
+   ```
+
 <!-- ROADMAP -->
 ## Roadmap
 
