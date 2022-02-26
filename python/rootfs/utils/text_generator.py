@@ -11,7 +11,7 @@ class TextGenerator:
         self.model = tf.keras.models.load_model('./model/model.h5')
         self.tokenizer = pickle.load(open('./model/tokenizer.pickle', 'rb'))
 
-    def generate_text(self, text: str, max_sequence_len: int = 22) -> str:
+    def generate_text(self, text: str, max_sequence_len: int = 25) -> str:
         seed_text = ' '.join(word_tokenize(text))
         counter = 0
         while counter < 100:
