@@ -24,6 +24,7 @@ const App = () => {
   const [respText, setRespText] = useState<string>('')
   const [copied, setCopied] = useState<boolean>(false)
   const [random, setRandom] = useState<boolean>(false)
+  const [loaded, setLoaded] = useState<boolean>(false)
 
   const rawSetTheme = (dark: boolean) => {
     const rawTheme = dark ? 'dark' : 'light'
@@ -45,12 +46,13 @@ const App = () => {
       setReqText(text)
       axios.post('/api/generate', { text: text }).then((res) => {
         setRespText(res.data.respText)
+        setLoaded(true)
       })
     }
   }
 
   const copyText = () => {
-    navigator.clipboard.writeText(respText)
+    navigator.clipboard.writeText(`${respText} #สร้างคำเสี่ยว`)
     setCopied(true)
     setTimeout(() => {
       setCopied(false)
@@ -91,6 +93,7 @@ const App = () => {
   }, [darkTheme])
 
   useEffect(() => {
+    setLoaded(false)
     const timeout = setTimeout(() => {
       generateText(text, reqText)
     }, 2000)
@@ -111,38 +114,41 @@ const App = () => {
             </div>
             <div className="flex flex-col gap-4">
               <div className="grid grid-cols-4 gap-4 items-center">
-                <span className="text-black dark:text-white md:text-xl text-lg">
+                <span className="text-black dark:text-white md:text-xl text-base">
                   ใส่ข้อความที่นี่:{' '}
                 </span>
                 <input
                   type={'text'}
-                  className="md:text-xl text-lg col-span-3 border border-grey-500 bg-amber-200 rounded-lg p-3"
+                  className="md:text-xl text-base col-span-3 border border-gray-500 bg-amber-200 rounded-lg p-3"
                   placeholder={'ใส่คำเสี่ยวๆ ที่นี่'}
                   value={text}
                   onChange={handleChange}
                 ></input>
               </div>
-              <div className="grid grid-cols-4 gap-4 items-center">
-                <span className="text-black dark:text-white md:text-xl text-lg">
+              <div className="grid grid-cols-4 gap-4 items-center relative">
+                <span className="text-black dark:text-white md:text-xl text-base">
                   ข้อความเสี่ยวๆ:{' '}
                 </span>
+                {!loaded && (
+                  <span className="absolute right-4 w-8 h-8 border-b-2 border-r-2 border-gray-900 rounded-full animate-spin inline-block"></span>
+                )}
                 <input
                   type={'text'}
                   disabled
-                  className="md:text-xl text-lg col-span-3 border border-grey-500 bg-orange-200 rounded-lg p-3"
+                  className="md:text-xl text-base col-span-3 border border-gray-500 bg-orange-200 rounded-lg p-3"
                   placeholder={'กำลังคิดคำเสี่ยวๆให้อยู่...'}
                   value={respText}
                 ></input>
               </div>
-              <div className="grid grid-cols-4 gap-4 items-center py-4">
+              <div className="grid grid-cols-6 gap-4 items-center py-4">
                 <button
-                  className="col-start-2 rounded border mx-2 p-3 border-green-300 text-lg font-bold cursor-pointer bg-green-200 hover:bg-green-300 active:bg-green-400"
+                  className="col-start-2 col-span-2 rounded border mx-2 p-3 border-green-300 md:text-lg text-base font-bold cursor-pointer bg-green-200 hover:bg-green-300 active:bg-green-400"
                   onClick={copyText}
                 >
                   {copied ? 'คัดลอกแล้ว' : 'คัดลอก'}
                 </button>
                 <button
-                  className="rounded border mx-2 p-3 border-red-300 text-lg font-bold cursor-pointer bg-red-200 hover:bg-red-300 active:bg-red-400"
+                  className="col-span-2 rounded border mx-2 p-3 border-red-300 md:text-lg text-base font-bold cursor-pointer bg-red-200 hover:bg-red-300 active:bg-red-400"
                   onClick={randomText}
                 >
                   {random ? 'สุ่มคำแล้ว' : 'สุ่มคำใหม่'}
@@ -152,12 +158,12 @@ const App = () => {
           </div>
         </div>
       </div>
-      <div className="absolute top-0 left-0 p-2 text-grey-500 text-2xl">
+      <div className="absolute top-0 left-0 p-2 text-gray-500 text-2xl">
         <p onClick={() => setDarkTheme(!darkTheme)} className="cursor-pointer">
           {darkTheme ? '🌞' : '🌙'}
         </p>
       </div>
-      <div className="absolute top-0 right-0 p-2 text-grey-500 dark:text-white text-lg">
+      <div className="absolute top-0 right-0 p-2 text-gray-500 dark:text-white text-lg">
         <a href="https://github.com/bossoq/siew-generator">
           Made by{' '}
           <span className="text-emerald-900 dark:text-emerald-200">bossoq</span>
