@@ -119,7 +119,7 @@ const App = () => {
                 </span>
                 <input
                   type={'text'}
-                  className="md:text-xl text-base col-span-3 border border-gray-500 bg-amber-200 rounded-lg p-3"
+                  className="md:text-xl max-w-lg text-base col-span-3 border border-gray-500 bg-amber-200 rounded-lg p-3"
                   placeholder={'ใส่คำเสี่ยวๆ ที่นี่'}
                   value={text}
                   onChange={handleChange}
@@ -132,13 +132,20 @@ const App = () => {
                 {!loaded && (
                   <span className="absolute right-4 w-8 h-8 border-b-2 border-r-2 border-gray-900 rounded-full animate-spin inline-block"></span>
                 )}
-                <input
+                {/* <input
                   type={'text'}
                   disabled
                   className="md:text-xl text-base col-span-3 border border-gray-500 bg-orange-200 rounded-lg p-3"
                   placeholder={'กำลังคิดคำเสี่ยวๆให้อยู่...'}
                   value={respText}
-                ></input>
+                ></input> */}
+                <div
+                  className={`md:text-xl max-w-lg break-words break-all min-h-0 max-h-max text-base col-span-3 border border-gray-500 bg-orange-200 rounded-lg p-3 ${
+                    !loaded && 'text-zinc-600'
+                  }`}
+                >
+                  {loaded ? respText : 'กำลังคิดคำเสี่ยวๆให้อยู่...'}
+                </div>
               </div>
               <div className="grid grid-cols-6 gap-4 items-center py-4">
                 <button
