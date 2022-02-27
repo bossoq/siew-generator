@@ -34,7 +34,7 @@
     <a href="https://github.com/bossoq/siew-generator"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://siew-generator.vercel.app">View Demo</a>
+    <a href="https://siewword.bossoq.live">View Demo</a>
     ·
     <a href="https://github.com/bossoq/siew-generator/issues">Report Bug</a>
     ·
@@ -69,7 +69,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://siew-generator.vercel.app)
+[![Product Name Screen Shot][product-screenshot]](https://siewword.bossoq.live)
 
 แรงบันดาลใจจาก [สร้าง มุกเสี่ยว โดยใช้ Python และ Deep Learning (Text Generation)](https://kok-suttanan.medium.com/%E0%B8%AA%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%87-%E0%B8%A1%E0%B8%B8%E0%B8%81%E0%B9%80%E0%B8%AA%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%A7-%E0%B9%82%E0%B8%94%E0%B8%A2%E0%B9%83%E0%B8%8A%E0%B9%89-python-%E0%B9%81%E0%B8%A5%E0%B8%B0-deep-learning-text-generation-809a9c8686ab) โดยคุณ Suttanan Charoenpanich ที่สร้าง Model ในการสร้างประโยคจากคำศัพท์ที่กรอกเข้ามา โดยได้ทำการปรับ [Colab](https://colab.research.google.com/drive/1pGl6lh4iZUf0HdJsaTW8BkbEnyK88OBI?usp=sharing) นี้มารันในเครื่อง Server ที่เตรียมไว้ และเปิด API ให้เวปไซต์เรียกใช้งาน
 
