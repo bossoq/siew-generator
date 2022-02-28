@@ -65,6 +65,18 @@
         sizes="16x16"
         href="/favicon/favicon-16x16.png" />
   <script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
+  <script async
+          src="https://www.googletagmanager.com/gtag/js?id=G-029W1TQ4Q5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-029W1TQ4Q5');
+  </script>
 </head>
 
 <body>
@@ -83,8 +95,7 @@
     -->
   <script>
     kofiWidgetOverlay.draw(
-      'bossoq',
-      {
+      'bossoq', {
         type: 'floating-chat',
         "floating-chat.donateButton.text": 'Buy me Coffee',
         "floating-chat.donateButton.background-color": "#ff3e00",
