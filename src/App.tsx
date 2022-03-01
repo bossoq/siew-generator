@@ -144,8 +144,8 @@ const App = () => {
               <div className="grid grid-cols-6 gap-4 items-center py-4">
                 <RWebShare
                   data={{
-                    text: respText,
-                    title: 'สร้างคำเสี่ยว',
+                    text: `${respText} #สร้างคำเสี่ยว`,
+                    title: `${respText} #สร้างคำเสี่ยว`,
                   }}
                   onClick={copyText}
                 >
