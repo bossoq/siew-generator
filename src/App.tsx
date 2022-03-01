@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { RWebShare } from 'react-web-share'
 import WordLists from './wordLists'
 
 const App = () => {
@@ -132,13 +133,6 @@ const App = () => {
                 {!loaded && (
                   <span className="absolute right-4 w-8 h-8 border-b-2 border-r-2 border-gray-900 rounded-full animate-spin inline-block"></span>
                 )}
-                {/* <input
-                  type={'text'}
-                  disabled
-                  className="md:text-xl text-base col-span-3 border border-gray-500 bg-orange-200 rounded-lg p-3"
-                  placeholder={'กำลังคิดคำเสี่ยวๆให้อยู่...'}
-                  value={respText}
-                ></input> */}
                 <div
                   className={`md:text-xl max-w-lg break-words break-all min-h-0 max-h-max text-base col-span-3 border border-gray-500 bg-orange-200 rounded-lg p-3 ${
                     !loaded && 'text-zinc-600'
@@ -148,12 +142,17 @@ const App = () => {
                 </div>
               </div>
               <div className="grid grid-cols-6 gap-4 items-center py-4">
-                <button
-                  className="col-start-2 col-span-2 rounded border mx-2 p-3 border-green-300 md:text-lg text-base font-bold cursor-pointer bg-green-200 hover:bg-green-300 active:bg-green-400"
+                <RWebShare
+                  data={{
+                    text: respText,
+                    title: 'สร้างคำเสี่ยว',
+                  }}
                   onClick={copyText}
                 >
-                  {copied ? 'คัดลอกแล้ว' : 'คัดลอก'}
-                </button>
+                  <button className="col-start-2 col-span-2 rounded border mx-2 p-3 border-green-300 md:text-lg text-base font-bold cursor-pointer bg-green-200 hover:bg-green-300 active:bg-green-400">
+                    {copied ? 'แชร์แล้ว' : 'แชร์คำเสี่ยว'}
+                  </button>
+                </RWebShare>
                 <button
                   className="col-span-2 rounded border mx-2 p-3 border-red-300 md:text-lg text-base font-bold cursor-pointer bg-red-200 hover:bg-red-300 active:bg-red-400"
                   onClick={randomText}
