@@ -116,40 +116,40 @@ const App = () => {
       <div className="grid h-screen place-items-center bg-white dark:bg-black">
         <div className="m-4">
           <div className="flex flex-col justify-center gap-6">
-            <div className="md:text-8xl text-6xl m-4 text-center font-bold">
+            <div className="md:text-8xl text-5xl m-4 text-center font-bold">
               <p className="animate-pulse inline-block text-black dark:text-white">
                 สร้าง คำ เสี่ยว 💘
               </p>
             </div>
             <div className="flex flex-col gap-4">
-              <div className="grid grid-cols-4 gap-4 items-center">
-                <span className="text-black dark:text-white md:text-xl text-base">
+              <div className="grid grid-cols-6 sm:grid-cols-4 gap-4 items-center">
+                <span className="text-black dark:text-white md:text-xl text-base col-span-2 sm:col-span-1">
                   ใส่ข้อความที่นี่:{' '}
                 </span>
                 <input
                   type={'text'}
-                  className="md:text-xl max-w-lg text-base col-span-3 border border-gray-500 bg-amber-200 rounded-lg p-3"
+                  className="md:text-xl max-w-lg text-base col-span-4 sm:col-span-3 border border-gray-500 bg-amber-200 rounded-lg p-3"
                   placeholder={'ใส่คำเสี่ยวๆ ที่นี่'}
                   value={text}
                   onChange={handleChange}
                 ></input>
               </div>
-              <div className="grid grid-cols-4 gap-4 items-center relative">
-                <span className="text-black dark:text-white md:text-xl text-base">
+              <div className="grid grid-cols-6 sm:grid-cols-4 gap-4 items-center relative">
+                <span className="text-black dark:text-white md:text-xl text-base col-span-2 sm:col-span-1">
                   ข้อความเสี่ยวๆ:{' '}
                 </span>
                 {!loaded && (
                   <span className="absolute right-4 w-8 h-8 border-b-2 border-r-2 border-gray-900 rounded-full animate-spin inline-block"></span>
                 )}
                 <div
-                  className={`md:text-xl max-w-lg break-words break-all min-h-0 max-h-max text-base col-span-3 border border-gray-500 bg-orange-200 rounded-lg p-3 ${
+                  className={`md:text-xl max-w-lg break-words break-all min-h-0 max-h-max text-base col-span-4 sm:col-span-3 border border-gray-500 bg-orange-200 rounded-lg p-3 ${
                     !loaded && 'text-zinc-600'
                   }`}
                 >
                   {loaded ? respText : 'กำลังคิดคำเสี่ยวๆให้อยู่...'}
                 </div>
               </div>
-              <div className="grid grid-cols-8 gap-4 items-center py-4">
+              <div className="grid grid-cols-6 sm:grid-cols-8 gap-2 sm:gap-4 items-center py-4">
                 <RWebShare
                   data={{
                     text: `${respText} #สร้างคำเสี่ยว`,
@@ -157,7 +157,7 @@ const App = () => {
                   }}
                   onClick={shareText}
                 >
-                  <button className="col-start-2 col-span-2 rounded border mx-2 p-3 border-green-300 md:text-lg text-base font-bold cursor-pointer bg-green-200 hover:bg-green-300 active:bg-green-400">
+                  <button className="sm:col-start-2 col-span-2 rounded border mx-2 p-3 border-green-300 md:text-lg text-base font-bold cursor-pointer bg-green-200 hover:bg-green-300 active:bg-green-400">
                     {shared ? 'แชร์แล้ว' : 'แชร์คำเสี่ยว'}
                   </button>
                 </RWebShare>
