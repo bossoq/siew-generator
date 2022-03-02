@@ -23,6 +23,7 @@ const App = () => {
   const [text, setText] = useState<string>('ถ้าเธอยังว่าง')
   const [reqText, setReqText] = useState<string>('')
   const [respText, setRespText] = useState<string>('')
+  const [shared, setShared] = useState<boolean>(false)
   const [copied, setCopied] = useState<boolean>(false)
   const [random, setRandom] = useState<boolean>(false)
   const [loaded, setLoaded] = useState<boolean>(false)
@@ -50,6 +51,13 @@ const App = () => {
         setLoaded(true)
       })
     }
+  }
+
+  const shareText = () => {
+    setShared(true)
+    setTimeout(() => {
+      setShared(false)
+    }, 2000)
   }
 
   const copyText = () => {
@@ -141,18 +149,24 @@ const App = () => {
                   {loaded ? respText : 'กำลังคิดคำเสี่ยวๆให้อยู่...'}
                 </div>
               </div>
-              <div className="grid grid-cols-6 gap-4 items-center py-4">
+              <div className="grid grid-cols-8 gap-4 items-center py-4">
                 <RWebShare
                   data={{
                     text: `${respText} #สร้างคำเสี่ยว`,
                     title: `${respText} #สร้างคำเสี่ยว`,
                   }}
-                  onClick={copyText}
+                  onClick={shareText}
                 >
                   <button className="col-start-2 col-span-2 rounded border mx-2 p-3 border-green-300 md:text-lg text-base font-bold cursor-pointer bg-green-200 hover:bg-green-300 active:bg-green-400">
-                    {copied ? 'แชร์แล้ว' : 'แชร์คำเสี่ยว'}
+                    {shared ? 'แชร์แล้ว' : 'แชร์คำเสี่ยว'}
                   </button>
                 </RWebShare>
+                <button
+                  className="col-span-2 rounded border mx-2 p-3 border-green-300 md:text-lg text-base font-bold cursor-pointer bg-green-200 hover:bg-green-300 active:bg-green-400"
+                  onClick={copyText}
+                >
+                  {copied ? 'คัดลอกแล้ว' : 'คัดลอก'}
+                </button>
                 <button
                   className="col-span-2 rounded border mx-2 p-3 border-red-300 md:text-lg text-base font-bold cursor-pointer bg-red-200 hover:bg-red-300 active:bg-red-400"
                   onClick={randomText}
