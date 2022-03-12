@@ -19,6 +19,7 @@ const App = () => {
     return false
   }
 
+  const ttsAPI = '/api/tts?text='
   const [darkTheme, setDarkTheme] = useState<boolean>(getInitialTheme())
   const [text, setText] = useState<string>('ถ้าเธอยังว่าง')
   const [reqText, setReqText] = useState<string>('')
@@ -27,6 +28,8 @@ const App = () => {
   const [copied, setCopied] = useState<boolean>(false)
   const [random, setRandom] = useState<boolean>(false)
   const [loaded, setLoaded] = useState<boolean>(false)
+  const [audioSource, setAudioSource] = useState<string>('')
+  const [playing, setPlaying] = useState<boolean>(false)
 
   const rawSetTheme = (dark: boolean) => {
     const rawTheme = dark ? 'dark' : 'light'
@@ -48,6 +51,7 @@ const App = () => {
       setReqText(text)
       axios.post('/api/generate', { text: text }).then((res) => {
         setRespText(res.data.respText)
+        setAudioSource(ttsAPI + res.data.respText)
         setLoaded(true)
       })
     }
@@ -95,6 +99,21 @@ const App = () => {
         setRandom(false)
       }
     }, 100)
+  }
+
+  const playSound = () => {
+    const sound = document.getElementById('mainTTS') as HTMLAudioElement
+    if (sound.children.item(0)?.getAttribute('src')) {
+      if (!sound.paused) {
+        sound.pause()
+      }
+      sound.currentTime = 0
+      sound.play()
+      setPlaying(true)
+      sound.addEventListener('ended', () => {
+        setPlaying(false)
+      })
+    }
   }
 
   useEffect(() => {
@@ -149,7 +168,7 @@ const App = () => {
                   {loaded ? respText : 'กำลังคิดคำเสี่ยวๆให้อยู่...'}
                 </div>
               </div>
-              <div className="grid grid-cols-6 sm:grid-cols-8 gap-2 sm:gap-4 items-center py-4">
+              <div className="grid grid-cols-4 sm:grid-cols-8 gap-2 sm:gap-4 items-center py-4">
                 <RWebShare
                   data={{
                     text: `${respText} #สร้างคำเสี่ยว`,
@@ -157,10 +176,21 @@ const App = () => {
                   }}
                   onClick={shareText}
                 >
-                  <button className="sm:col-start-2 col-span-2 rounded border mx-2 p-3 border-green-300 md:text-lg text-base font-bold cursor-pointer bg-green-200 hover:bg-green-300 active:bg-green-400">
+                  <button className="col-span-2 rounded border mx-2 p-3 border-green-300 md:text-lg text-base font-bold cursor-pointer bg-green-200 hover:bg-green-300 active:bg-green-400">
                     {shared ? 'แชร์แล้ว' : 'แชร์คำเสี่ยว'}
                   </button>
                 </RWebShare>
+                <button
+                  className="col-span-2 rounded border mx-2 p-3 border-green-300 md:text-lg text-base font-bold cursor-pointer bg-green-200 hover:bg-green-300 active:bg-green-400"
+                  onClick={playSound}
+                >
+                  {playing ? 'กำลังเล่นเสียง' : 'เล่นเสียง'}
+                </button>
+                {loaded && (
+                  <audio id="mainTTS" preload="metadata">
+                    <source src={audioSource} type="audio/mpeg" />
+                  </audio>
+                )}
                 <button
                   className="col-span-2 rounded border mx-2 p-3 border-green-300 md:text-lg text-base font-bold cursor-pointer bg-green-200 hover:bg-green-300 active:bg-green-400"
                   onClick={copyText}
