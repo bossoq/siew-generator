@@ -1,7 +1,10 @@
 import os
+from random import choice
 
 from flask import Flask, request, jsonify
 from utils.text_generator import TextGenerator
+
+from const import WORDS
 
 api_token = os.environ.get('TOKEN', None)
 text_generator = TextGenerator()
@@ -20,6 +23,17 @@ def generate():
         else:
             return 'Invalid token'
     elif request.method == 'GET':
+        return 'You are not allowed to access this page.'
+
+
+@app.route('/random', methods=['GET'])
+def gen_random():
+    if request.method == 'GET':
+        reqText = choice(WORDS)
+        respText = text_generator.generate_text(reqText)
+        resp_dict = {'reqText': reqText, 'respText': respText}
+        return jsonify(resp_dict)
+    else:
         return 'You are not allowed to access this page.'
 
 
