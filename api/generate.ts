@@ -10,7 +10,7 @@ const generate = async (req: Request, res: Response) => {
         { text: reqText },
         {
           headers: {
-            token: process.env.TOKEN,
+            token: process.env.TOKEN ?? '',
           },
         }
       )
